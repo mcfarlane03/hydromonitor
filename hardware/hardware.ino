@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 // ADD YOUR IMPORTS HERE
-#include "DHT.h"
+#include <DHT.h>
 #include <FastLED.h>
 
 
@@ -54,8 +54,8 @@ static const char* mqtt_server = "dbs.msjrealtms.com";             // Broker IP 
 static uint16_t mqtt_port = 1883;
 
 // WIFI CREDENTIALS
-const char* ssid = "sandra";        // Add your Wi-Fi ssid
-const char* password = "lui2nick";  // Add your Wi-Fi password
+const char* ssid = "MonaConnect";        // Add your Wi-Fi ssid
+const char* password = "";  // Add your Wi-Fi password
 
 
 
@@ -78,7 +78,7 @@ void vButtonCheck(void* pvParameters);
 void vUpdate(void* pvParameters);
 bool isNumber(double number);
 
-
+// 
 /* Declare your functions below */
 double convert_Celsius_to_fahrenheit(double c);
 double convert_fahrenheit_to_Celsius(double f);
@@ -156,12 +156,10 @@ void vUpdate(void* pvParameters) {
     // #######################################################
 
     // 1. Read Humidity and save in variable below
-    double h = 0;
-    h = dht.readHumidity();
+    double h = dht.readHumidity();
 
     // 2. Read temperature as Celsius   and save in variable below
-    double t = 0;
-    t = dht.readTemperature();
+    double t = dht.readTemperature();
 
 
     if (isNumber(t)) {
@@ -283,12 +281,12 @@ bool publish(const char* topic, const char* payload) {
 
 double convert_Celsius_to_fahrenheit(double c) {
   // CONVERTS INPUT FROM °C TO °F. RETURN RESULTS
-  return (c * 9 / 5) + 32;
+  return (c * 9.0/5.0) + 32;
 }
 
 double convert_fahrenheit_to_Celsius(double f) {
   // CONVERTS INPUT FROM °F TO °C. RETURN RESULT
-  return (5 / 9) * (f - 32);
+  return (5.0/9.0) * (f - 32);
 }
 
 double calcHeatIndex(double Temp, double Humid) {
@@ -297,18 +295,18 @@ double calcHeatIndex(double Temp, double Humid) {
   double f = convert_Celsius_to_fahrenheit(Temp);
 
   double c1 = -42.379;
-  double c2 = -2.04901523;
-  double c3 = -10.14333127;
+  double c2 = 2.04901523;
+  double c3 = 10.14333127;
   double c4 = -0.22475541;
-  double c5 = -6.83783 * pow(10, -3);
-  double c6 = -5.481717 * pow(10, -2);
-  double c7 = -1.22874 * pow(10, -3);
-  double c8 = 8.5282 * pow(10, -4);
-  double c9 = -1.99 * pow(10, -6);
+  double c5 = -(6.83783 * pow(10, -3));
+  double c6 = -(5.481717 * pow(10, -2));
+  double c7 = (1.22874 * pow(10, -3));
+  double c8 = (8.5282 * pow(10, -4));
+  double c9 = -(1.99 * pow(10, -6));
 
-  double HI = c1 + (c2 * f) + (c3 * Humid) + (c4 * f * Humid) + (c5 * pow(f, 2)) + (c6 * pow(Humid, 2)) + (c7 * pow(f, 2) * Humid) + (c8 * f * pow(Humid, 2)) + (c9 * pow(f, 2) * pow(Humid, 2));
+  double HI = c1 + (c2 * f) + (c3 * Humid) + (c4 * f * Humid) + (c5 * pow(f, 2)) + (c6 * pow(Humid, 2)) + (c7 * pow(f, 2) * Humid) + (c8 * f * pow(Humid, 2)) + (c9 * pow(f, 2) * pow(Humid, 2));  
+  return convert_fahrenheit_to_Celsius(HI);
 
-  return HI;
 }
 
 

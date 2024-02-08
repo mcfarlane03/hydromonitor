@@ -58,7 +58,7 @@ const route       = useRoute();
 const Mqtt        = useMqttStore();
 const { payload, payloadTopic } = storeToRefs(Mqtt);
 
-const led         = reactive({"brightness":255,"nodes":1,"color":{ r: 255, g: 0, b: 255, a: 1 }});
+const led         = reactive({"brightness":255,"nodes":1,"color":{ r: 255, g: 255, b: 255, a: 1 }});
 let timer, ID     = 1000;
 
 
