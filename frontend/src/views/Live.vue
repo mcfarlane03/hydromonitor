@@ -210,6 +210,7 @@ watch(payload,(data)=> {
     
     tempHiChart.value.series[0].addPoint({y:parseFloat(data.temperature.toFixed(2)) ,x: data.timestamp * 1000 }, true, shift.value); 
     tempHiChart.value.series[1].addPoint({y:parseFloat(data.heatindex.toFixed(2)) ,x: data.timestamp * 1000 }, true, shift.value); 
+    
     humidHiChart.value.series[0].addPoint({y:parseFloat(data.humidity.toFixed(2)), x: data.timestamp * 1000}, true, shift.value);
 })
 
